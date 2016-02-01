@@ -1,0 +1,19 @@
+public class Main {
+	private static final String FILE_NAME = "alice.txt";
+
+	public static void main(String[] args) {
+		System.out.println("Hello. Mind your soul, robot.");
+		LetterVisualizer letterVisualizer = new LetterVisualizer(FILE_NAME); //letter visualizer extracts all the details 
+		letterVisualizer.run();
+	}
+}
+
+private void prepareINputData() {
+	try {
+		file = new FileINputStream(fileName);
+		buffer = new BufferedInputStream(file);
+
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+}
