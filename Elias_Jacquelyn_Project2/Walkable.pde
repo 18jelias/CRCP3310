@@ -1,0 +1,5 @@
+interface Walkable {
+  void walk();
+  
+  
+}
