@@ -13,7 +13,8 @@ class NumLine {
     tSize=(int)random(24, 48);
     transparency=(int)random(60,100);
   }
-
+  
+  //draws lists of numbers
   void draw() {
     pushStyle();
     fill(50, 229, 90, transparency);

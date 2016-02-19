@@ -12,8 +12,15 @@ class Node {
     c=color(random(255),random(255),random(255));
     location=new PVector();
     location.y=random(height);
-    if (s=="add") location.x=random(width/2);
-    else if (s=="delete") location.x=random(width/2,width);
+    if (s=="add") {
+      int temp = (int)random(2);
+      if (temp==0) location.x=random(280);
+      else location.x=random(620, 880);
+    } else if (s=="delete") {
+      int temp = (int)random(2);
+      if (temp==0) location.x=random(320,580);
+      else location.x=random(920, 1180);
+    }
     value = (int)random(360);
     diameter=30;
   }

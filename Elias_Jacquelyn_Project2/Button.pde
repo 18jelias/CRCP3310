@@ -16,7 +16,7 @@ class Button {
   }
 
   Button(int x, int y, String s) {
-    this(x, y, color(100, 100, 100, 100), s);
+    this(x, y, color(100, 100, 100, 180), s);
   }
 
   Button(int x, int y, int l, int w, color c, String s) {

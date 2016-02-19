@@ -28,7 +28,7 @@ void setup() {
   initializeArrays();
   story = new Button(1100, 50, "Story Mode");
   state = new Button(1100, 50, "State Mode");
-  areaWidth = width/4;
+  areaWidth = 300;
   lines=new NumLine[30];
   for (int i = 0; i<lines.length;i++) {
     lines[i]=new NumLine(i*40);
@@ -36,7 +36,7 @@ void setup() {
 
 }
 
-
+//Draws functions depending on which view is being shown
 void draw() {
   background(0);
   if (view == VIEW_STORY) {
@@ -56,10 +56,12 @@ void mousePressed() {
   }
 }
 
+//Draws numbers in background
 void drawBackground() {
   for(NumLine n:lines) n.draw();
 }
 
+//Initializes different Node and Walker arrays
 void initializeArrays() {
   initializeWalker();
   initializeAddNodes();

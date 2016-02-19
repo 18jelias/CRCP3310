@@ -11,11 +11,9 @@ void drawStoryView() {
 }
 
 void runStory() {
-
+  for (Walkable w : walkers) w.walk();
   for (Touchable w : walkers) {
     w.draw();
-    w.walk();
-    w.update();
     for (int i=(addNodes.size()-1); i>=0;i--) {
       if (w.isTouching(addNodes.get(i))) {
         w.add(addNodes.get(i).isTouched());
@@ -36,10 +34,16 @@ void runStory() {
 
 void drawStoryBackground() {
   pushStyle();
-  for (int i = 1; i < 4; i+=areaWidth) {
+  fill(255);
+  textSize(24);
+  for (int i = 1; i < 4; i++) {
     stroke(255);
-    line(i*areaWidth, 0, i*areaWidth, height);
+    line(i*300, 0, i*300, height);
   }  
+  text("Add", 130, 750);
+  text("Delete", 430, 750);
+  text("Add", 730, 750);
+  text("Delete", 1000, 750);
   popStyle();  
 }
 

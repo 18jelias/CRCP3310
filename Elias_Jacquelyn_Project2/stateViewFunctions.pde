@@ -1,4 +1,6 @@
 int stateWidth = width / 4;
+
+//draws all parts of state view
 void drawStateView() {
   drawBackground();
   story.draw();
@@ -6,6 +8,7 @@ void drawStateView() {
   runState();
 }
 
+//does actions in state mode
 void runState() {
   if(slider.getValue()==0) drawArrayL();
   else if(slider.getValue()==1) drawBag();
@@ -14,21 +17,22 @@ void runState() {
 }
 
 void drawArrayL() {
-  walkers[0].draw();
+  walkers[0].drawState();
 }
 
 void drawBag() {
-  walkers[1].draw();
+  walkers[1].drawState();
 }
 
 void drawSet() {
-  walkers[2].draw();
+  walkers[2].drawState();
 }
 
 void drawStack() {
-  walkers[3].draw();
+  walkers[3].drawState();
 }
 
+//adds value to slider
 void initializeSlider() {
   cp5 = new ControlP5(this);
   slider = new Slider(cp5, "Choose data structure");
