@@ -8,16 +8,22 @@
 require 'sqlite3'
 
 DB_FILE_NAME="songs.sqlite3.db"
+SQL_SELECT_SONGS = "SELECT 
+						songs.name AS Song, genres.name AS Genre, albums.name AS Album
+					FROM songs 
+					LEFT JOIN genres ON songs.genre_id=genres.id
+					LEFT JOIN albums ON songs.album_id=albums.id
+					;" 
 SQL_SELECT_GENRES = "SELECT name FROM genres;"
 SQL_SELECT_ALBUMS = "SELECT name FROM albums"
 SQL_SELECT_ARTISTS = "SELECT name FROM artists"
 
-STATE_MENU = 0
-STATE_ALLSONGS = 1
-STATE_GENRE = 2
-STATE_ALBUM = 3
-STATE_ARTIST = 4
-STATE_SONG = 5
+STATE_MENU = "0"
+STATE_ALLSONGS = "1"
+STATE_GENRE = "2"
+STATE_ALBUM = "3"
+STATE_ARTIST = "4"
+STATE_SONG = "5"
 
 state = 0
 input = 0;
@@ -33,12 +39,25 @@ def display_menu
 	puts "Enter a choice:"
 end
 
+def display_all
+	db = SQLite3::Database.new(DB_FILE_NAME)
+	db.execute("SELECT 
+						songs.name AS Song, genres.name AS Genre, albums.name AS Album
+					FROM songs 
+					LEFT JOIN genres ON songs.genre_id=genres.id
+					LEFT JOIN albums ON songs.album_id=albums.id") do |row| #iterator 
+		puts row
+		puts "\n"
+	end
+	db.close	
+end
 
 def display_genres
 	db = SQLite3::Database.new(DB_FILE_NAME)
 	db.execute(SQL_SELECT_GENRES) do |row| #iterator 
 		puts row
 	end
+	puts "\n"
 	puts "New genre name:"
 	new_name = gets.chomp
 	db.execute "INSERT INTO genres(name) VALUES('#{new_name}');"
@@ -47,12 +66,20 @@ end
 
 def display_album
 	db = SQLite3::Database.new(DB_FILE_NAME)
-	db.execute(SQL_SELECT_ALBUMS) do |row| #iterator 
+	db.execute(SQL_SELECT_ARTISTS) do |row| #iterator 
 		puts row
 	end
+	puts "\n"	
+	puts "Select album artist:"
+	new_artist = gets.chomp
+	db.execute("SELECT name FROM albums") do |row| #iterator 
+		puts row
+	end
+	puts "\n"	
 	puts "New album name:"
 	new_album = gets.chomp
-	db.execute "INSERT INTO album(name) VALUES('#{new_album}');"
+
+	db.execute "INSERT INTO albums(name, artist_id) VALUES('#{new_album}', '#{new_artist}');"
 	db.close
 end
 
@@ -62,9 +89,30 @@ def display_artist
 	db.execute(SQL_SELECT_ARTISTS) do |row| #iterator 
 		puts row
 	end
+	puts "\n"	
 	puts "New artist name:"
 	new_artist = gets.chomp
-	db.execute "INSERT INTO artist(name) VALUES('#{new_artist}');"	
+	db.execute "INSERT INTO artists(name) VALUES('#{new_artist}');"	
+	db.close
+end
+
+def display_song
+	db = SQLite3::Database.new(DB_FILE_NAME)
+	puts "Add a new song!"
+	new_song = gets.chomp
+	db.execute(SQL_SELECT_GENRES) do |row| #iterator 
+		puts row
+	end
+	puts "\n"	
+	puts "Choose the genre of the song:"
+	new_genre = gets.chomp	
+	db.execute("SELECT name FROM albums") do |row| #iterator 
+		puts row
+	end
+	puts "\n"	
+	puts "Choose the album of the song:"
+	new_album = gets.chomp
+	db.execute "INSERT INTO songs(name, genre_id, album_id) VALUES('#{new_song}', '#{new_genre}', '#{new_album}');"
 	db.close
 end
 
@@ -74,15 +122,16 @@ go = true;
 while go do
 	display_menu;
 	input = gets.chomp
-
 	if input == "1"
+		display_all;
 	elsif input == "2"
 		display_genres;
 	elsif input == "3"
 		display_album;
 	elsif input == "4"
-		display_artists;
+		display_artist;
 	elsif input == "5"
+		display_song;
 	end
 end
 
