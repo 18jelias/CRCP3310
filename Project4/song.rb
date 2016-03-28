@@ -39,26 +39,21 @@ def display_genres
 	db.execute(SQL_SELECT_GENRES) do |row| #iterator 
 		puts row
 	end
-	db.close
-end
-
-def input_genres
 	puts "New genre name:"
 	new_name = gets.chomp
+	db.execute "INSERT INTO genres(name) VALUES('#{new_name}');"
+	db.close
 end
-
 
 def display_album
 	db = SQLite3::Database.new(DB_FILE_NAME)
 	db.execute(SQL_SELECT_ALBUMS) do |row| #iterator 
 		puts row
 	end
-	db.close
-end
-
-def input_album;
 	puts "New album name:"
 	new_album = gets.chomp
+	db.execute "INSERT INTO album(name) VALUES('#{new_album}');"
+	db.close
 end
 
 
@@ -67,27 +62,28 @@ def display_artist
 	db.execute(SQL_SELECT_ARTISTS) do |row| #iterator 
 		puts row
 	end
+	puts "New artist name:"
+	new_artist = gets.chomp
+	db.execute "INSERT INTO artist(name) VALUES('#{new_artist}');"	
 	db.close
 end
 
 #Main Loop
 
-display_menu;
-input = gets.chomp
+go = true;
+while go do
+	display_menu;
+	input = gets.chomp
 
-
-if input == "1"
-elsif input == "2"
-	puts "0k"
-	display_genres;
-	input_genres;
-elsif input == "3"
-	display_album;
-	input_album;
-elsif input == "4"
-	display_artists;
-	input_artists;
-elsif input == "5"
+	if input == "1"
+	elsif input == "2"
+		display_genres;
+	elsif input == "3"
+		display_album;
+	elsif input == "4"
+		display_artists;
+	elsif input == "5"
+	end
 end
 
 
