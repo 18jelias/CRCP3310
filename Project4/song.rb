@@ -46,7 +46,7 @@ def display_all
 		puts "Song: " + "#{row[0]}" + " Genre: " + "#{row[1]}" + " Album: " + "#{row[2]}"
 		puts "\n"
 	end
-	
+
 	db.close	
 end
 
@@ -58,7 +58,6 @@ def display_genres
 		puts row
 	end
 	puts "\n"
-
 	puts "New genre name:"
 	new_name = gets.chomp
 
@@ -74,18 +73,18 @@ def display_album
 		puts row
 	end
 	puts "\n"	
-
 	puts "Select album artist:"
 	new_artist = gets.chomp
+	new_artist_id = "SELECT id FROM artists WHERE artists.name=new_artist;"
+
 	db.execute("SELECT name FROM albums") do |row| #iterator 
 		puts row
 	end
 	puts "\n"	
-
 	puts "New album name:"
 	new_album = gets.chomp
 
-	db.execute "INSERT INTO albums(name, artist_id) VALUES('#{new_album}', '#{new_artist}');"
+	db.execute "INSERT INTO albums(name, artist_id) VALUES('#{new_album}', '#{new_artist_id}');"
 	db.close
 end
 
@@ -97,7 +96,6 @@ def display_artist
 		puts row
 	end
 	puts "\n"	
-
 	puts "New artist name:"
 	new_artist = gets.chomp
 
@@ -115,14 +113,13 @@ def display_song
 		puts row
 	end
 	puts "\n"	
-
 	puts "Choose the genre of the song:"
 	new_genre = gets.chomp	
+
 	db.execute("SELECT name FROM albums") do |row| #iterator 
 		puts row
 	end
 	puts "\n"	
-
 	puts "Choose the album of the song:"
 	new_album = gets.chomp
 
@@ -135,6 +132,7 @@ go = true;
 while go do
 	display_menu;
 	input = gets.chomp
+	puts "\n"
 	if input == STATE_ALLSONGS
 		display_all;
 	elsif input == STATE_GENRE
@@ -147,13 +145,3 @@ while go do
 		display_song;
 	end
 end
-
-
-
-#puts "Add an album..."
-#puts "Enter the album name:"
-#album_name = gets.chomp
-#db.execute("SELECT * FROM artists;") do |row|
-#	puts  "#{row[0]"
-#When you add an album...Enter the name fo the album:
-#After show the artist and allow them to pick a artist name
