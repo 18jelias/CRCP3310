@@ -54,11 +54,12 @@ end
 def display_genres
 	db = SQLite3::Database.new(DB_FILE_NAME)
 
+	puts "Here are the current genres in the database:"
 	db.execute(SQL_SELECT_GENRES) do |row| #iterator 
 		puts row
 	end
 	puts "\n"
-	puts "New genre name:"
+	puts "Insert the new genre name:"
 	new_name = gets.chomp
 
 	db.execute "INSERT INTO genres(name) VALUES('#{new_name}');"
@@ -69,19 +70,21 @@ end
 def display_album
 	db = SQLite3::Database.new(DB_FILE_NAME)
 
+	puts "Here are the current artists in the database: "
 	db.execute(SQL_SELECT_ARTISTS) do |row| #iterator 
 		puts row
 	end
 	puts "\n"	
-	puts "Select album artist:"
+	puts "Select the album artist:"
 	new_artist = gets.chomp
 	new_artist_id = "SELECT id FROM artists WHERE artists.name=new_artist;"
 
-	db.execute("SELECT name FROM albums") do |row| #iterator 
+	puts "Here are the current albums in the database: "
+	db.execute(SQL_SELECT_ALBUMS) do |row| #iterator 
 		puts row
 	end
 	puts "\n"	
-	puts "New album name:"
+	puts "Insert the new album name:"
 	new_album = gets.chomp
 
 	db.execute "INSERT INTO albums(name, artist_id) VALUES('#{new_album}', '#{new_artist_id}');"
@@ -92,11 +95,12 @@ end
 def display_artist
 	db = SQLite3::Database.new(DB_FILE_NAME)
 
+	puts "Here are the current artists in the database:"
 	db.execute(SQL_SELECT_ARTISTS) do |row| #iterator 
 		puts row
 	end
 	puts "\n"	
-	puts "New artist name:"
+	puts "Insert the new artist name:"
 	new_artist = gets.chomp
 
 	db.execute "INSERT INTO artists(name) VALUES('#{new_artist}');"	
@@ -107,23 +111,29 @@ end
 def display_song
 	db = SQLite3::Database.new(DB_FILE_NAME)
 
-	puts "Add a new song!"
+	puts "Insert the new song title:"
 	new_song = gets.chomp
+
+	puts "\n"
+	puts "Here are the current genres in the database: "
 	db.execute(SQL_SELECT_GENRES) do |row| #iterator 
 		puts row
 	end
 	puts "\n"	
-	puts "Choose the genre of the song:"
+	puts "Choose the genre of the new song:"
 	new_genre = gets.chomp	
 
-	db.execute("SELECT name FROM albums") do |row| #iterator 
+	puts "\n"
+	puts "Here are the current albums in the database:"
+	db.execute(SQL_SELECT_ALBUMS) do |row| #iterator 
 		puts row
 	end
 	puts "\n"	
-	puts "Choose the album of the song:"
+	puts "Choose the album of the new song:"
 	new_album = gets.chomp
 
 	db.execute "INSERT INTO songs(name, genre_id, album_id) VALUES('#{new_song}', #{new_genre}', '#{new_album}');"
+	
 	db.close
 end
 
