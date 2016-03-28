@@ -28,7 +28,7 @@ STATE_SONG = "5"
 state = 0
 input = 0;
 
-
+#Displays menu
 def display_menu
 	puts "Welcome to the music database!"
 	puts "	1. Display all song information."
@@ -39,6 +39,7 @@ def display_menu
 	puts "Enter a choice:"
 end
 
+#Displays song, genre, and album
 def display_all
 	db = SQLite3::Database.new(DB_FILE_NAME)
 	db.execute(SQL_SELECT_SONGS) do |row| #iterator 
@@ -48,6 +49,7 @@ def display_all
 	db.close	
 end
 
+#Displays genre and inserts new genre
 def display_genres
 	db = SQLite3::Database.new(DB_FILE_NAME)
 	db.execute(SQL_SELECT_GENRES) do |row| #iterator 
@@ -60,6 +62,7 @@ def display_genres
 	db.close
 end
 
+#Displays artist, albums and then inserts new album
 def display_album
 	db = SQLite3::Database.new(DB_FILE_NAME)
 	db.execute(SQL_SELECT_ARTISTS) do |row| #iterator 
@@ -79,7 +82,7 @@ def display_album
 	db.close
 end
 
-
+#Displays artists then adds new artist
 def display_artist
 	db = SQLite3::Database.new(DB_FILE_NAME)
 	db.execute(SQL_SELECT_ARTISTS) do |row| #iterator 
@@ -92,6 +95,7 @@ def display_artist
 	db.close
 end
 
+#Displays genre and album and then inserts a new song
 def display_song
 	db = SQLite3::Database.new(DB_FILE_NAME)
 	puts "Add a new song!"
@@ -108,7 +112,7 @@ def display_song
 	puts "\n"	
 	puts "Choose the album of the song:"
 	new_album = gets.chomp
-	db.execute "INSERT INTO songs(name, genre_id, album_id) VALUES('#{new_song}', '#{new_genre}', '#{new_album}');"
+	db.execute "INSERT INTO songs(name, genre_id, album_id) VALUES('#{new_song}', #{new_genre}', '#{new_album}');"
 	db.close
 end
 
