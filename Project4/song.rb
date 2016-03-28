@@ -41,11 +41,7 @@ end
 
 def display_all
 	db = SQLite3::Database.new(DB_FILE_NAME)
-	db.execute("SELECT 
-						songs.name AS Song, genres.name AS Genre, albums.name AS Album
-					FROM songs 
-					LEFT JOIN genres ON songs.genre_id=genres.id
-					LEFT JOIN albums ON songs.album_id=albums.id") do |row| #iterator 
+	db.execute(SQL_SELECT_SONGS) do |row| #iterator 
 		puts row
 		puts "\n"
 	end
