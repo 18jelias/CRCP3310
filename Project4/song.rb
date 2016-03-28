@@ -77,7 +77,7 @@ def display_album
 	puts "\n"	
 	puts "Select the album artist:"
 	new_artist = gets.chomp
-	new_artist_id = "SELECT id FROM artists WHERE artists.name=new_artist;"
+	new_artist_id = "SELECT id FROM artists WHERE artists.name='#{new_artist}';"
 
 	puts "Here are the current albums in the database: "
 	db.execute(SQL_SELECT_ALBUMS) do |row| #iterator 
@@ -87,7 +87,7 @@ def display_album
 	puts "Insert the new album name:"
 	new_album = gets.chomp
 
-	db.execute "INSERT INTO albums(name, artist_id) VALUES('#{new_album}', '#{new_artist_id}');"
+	db.execute "INSERT INTO albums(name, artist_id) VALUES('#{new_album}', ?);", new_artist_id
 	db.close
 end
 
@@ -122,7 +122,7 @@ def display_song
 	puts "\n"	
 	puts "Choose the genre of the new song:"
 	new_genre = gets.chomp	
-	new_genre_id = "SELECT id FROM genres WHERE genres.name=new_genre;"
+	new_genre_id = "SELECT id FROM genres WHERE genres.name='#{new_genre}';"
 
 	puts "\n"
 	puts "Here are the current albums in the database:"
@@ -132,9 +132,9 @@ def display_song
 	puts "\n"	
 	puts "Choose the album of the new song:"
 	new_album = gets.chomp
-	new_album_id = "SELECT id FROM albums WHERE albums.name=new_album;"
+	new_album_id = "SELECT id FROM albums WHERE albums.name='#{new_album}';"
 
-	db.execute "INSERT INTO songs(name, genre_id, album_id) VALUES('#{new_song}', '#{new_genre_id}','#{new_album_id}');"
+	db.execute "INSERT INTO songs(name, genre_id, album_id) VALUES('#{new_song}', ?, ?);", new_genre_id, new_album_id
 	
 	db.close
 end
