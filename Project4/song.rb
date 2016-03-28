@@ -28,7 +28,7 @@ STATE_SONG = "5"
 state = 0
 input = 0;
 
-
+#Displays main menu
 def display_menu
 	puts "Welcome to the music database!"
 	puts "	1. Display all song information."
@@ -39,15 +39,20 @@ def display_menu
 	puts "Enter a choice:"
 end
 
+
+#Displays all song information
 def display_all
 	db = SQLite3::Database.new(DB_FILE_NAME)
+
 	db.execute(SQL_SELECT_SONGS) do |row| #iterator 
 		puts row
 		puts "\n"
 	end
+
 	db.close	
 end
 
+#Displays all genres and inserts new genre
 def display_genres
 	db = SQLite3::Database.new(DB_FILE_NAME)
 	db.execute(SQL_SELECT_GENRES) do |row| #iterator 
@@ -60,6 +65,7 @@ def display_genres
 	db.close
 end
 
+#Displays all artists and albums and adds new album
 def display_album
 	db = SQLite3::Database.new(DB_FILE_NAME)
 	db.execute(SQL_SELECT_ARTISTS) do |row| #iterator 
@@ -79,7 +85,7 @@ def display_album
 	db.close
 end
 
-
+#Displays all artists and adds new artist
 def display_artist
 	db = SQLite3::Database.new(DB_FILE_NAME)
 	db.execute(SQL_SELECT_ARTISTS) do |row| #iterator 
@@ -92,6 +98,7 @@ def display_artist
 	db.close
 end
 
+#Displays all genres and albums and adds new song
 def display_song
 	db = SQLite3::Database.new(DB_FILE_NAME)
 	puts "Add a new song!"
@@ -113,7 +120,6 @@ def display_song
 end
 
 #Main Loop
-
 go = true;
 while go do
 	display_menu;
