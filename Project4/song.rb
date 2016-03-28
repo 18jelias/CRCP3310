@@ -15,8 +15,8 @@ SQL_SELECT_SONGS = "SELECT
 					LEFT JOIN albums ON songs.album_id=albums.id
 					;" 
 SQL_SELECT_GENRES = "SELECT name FROM genres;"
-SQL_SELECT_ALBUMS = "SELECT name FROM albums"
-SQL_SELECT_ARTISTS = "SELECT name FROM artists"
+SQL_SELECT_ALBUMS = "SELECT name FROM albums;"
+SQL_SELECT_ARTISTS = "SELECT name FROM artists;"
 
 STATE_MENU = "0"
 STATE_ALLSONGS = "1"
@@ -122,6 +122,7 @@ def display_song
 	puts "\n"	
 	puts "Choose the genre of the new song:"
 	new_genre = gets.chomp	
+	new_genre_id = "SELECT id FROM genres WHERE genres.name=new_genre;"
 
 	puts "\n"
 	puts "Here are the current albums in the database:"
@@ -131,8 +132,9 @@ def display_song
 	puts "\n"	
 	puts "Choose the album of the new song:"
 	new_album = gets.chomp
+	new_album_id = "SELECT id FROM albums WHERE albums.name=new_album;"
 
-	db.execute "INSERT INTO songs(name, genre_id, album_id) VALUES('#{new_song}', #{new_genre}', '#{new_album}');"
+	db.execute "INSERT INTO songs(name, genre_id, album_id) VALUES('#{new_song}', '#{new_genre_id}','#{new_album_id}');"
 	
 	db.close
 end
